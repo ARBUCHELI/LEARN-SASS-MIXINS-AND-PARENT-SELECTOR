@@ -1,0 +1,173 @@
+# MIXINS AND THE & SELECTOR
+---------------------------
+npm install -g sass
+
+sass main.scss main.css
+
+* The & Selector in Nesting
+---------------------------
+In the next set of exercises, you’ll use new Sass concepts to fix and add styles to the notecard on the right so that it flips when you hover over it!
+
+Recall that, in CSS, a pseudo-element is used to style parts of an element, for example:
+
+	. Styling the content ::before or ::after the content of an element.
+
+	. Using a pseudo class such as :hover to set the properties of an element when the user’s mouse is touching the area of the element.
+
+In Sass, the parent selector, &, is used to specify exactly where a parent selector should be inserted. It also helps write pseudo-classes in a much less repetitive way.
+
+For example, the following Sass:
+
+.notecard{ 
+  &:hover{
+      @include transform (rotatey(-180deg));  
+    }
+  }
+
+will compile to the following CSS:
+
+.notecard:hover {
+  transform: rotatey(-180deg);
+}
+
+* Instructions
+--------------
+Checkpoint 1 Passed
+1.
+In main.scss, inside of .notecard, nest and invoke the following & selector:
+
+&:hover{
+  @include transform (rotatey(-180deg));  
+}
+
+Click “Run” to see your changes in the browser and inspect them in the output of main.css. Hover over your card and watch the contents rotate! We will be styling it further in the next 
+exercises.
+
+index.html
+----------
+<link rel="stylesheet" type="text/css" href="main.css">
+
+<div id="notecards">
+  <div class="notecard">
+    <div class="front">
+      <span class="word">Titanosaur</span>
+    </div>
+    <div class="back">
+      <div class="definition">
+        122 ft, 70 tons, Herbivore, Patagonia about 100 to 95 million years ago
+        <div class="photo"></div>
+      </div>
+    </div>
+  </div>
+ 
+</div>
+
+main.scss
+---------
+@mixin stripes($direction, $width-percent, $stripe-color, $stripe-background: #FFF) {
+  background: repeating-linear-gradient(
+    $direction,
+    $stripe-background,
+    $stripe-background ($width-percent - 1),
+    $stripe-color 1%,
+    $stripe-background $width-percent
+  );
+}
+
+@mixin transform($transformation) {
+  transform: $transformation;
+  -webkit-transform: $transformation;
+  -moz-transform: $transformation;
+  -ms-transform: $transformation;
+  -o-transform: $transformation;  
+}
+
+@mixin photo-content {
+  object-fit: cover;
+}
+
+//Add your own mixins here
+
+.notecard {
+  width: 300px;
+  height: 180px;
+  border: 1px solid black;
+  display: inline-block;
+  margin: 20px;
+  font-family: Roboto, sans-serif;
+  box-shadow: 1px 1px 2px 2px rgba(0,0,0,.2);
+  &:hover{
+    @include transform (rotatey(-180deg));  
+  }
+  
+  .front, .back {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+  }
+  
+  .front {
+  z-index: 3;
+  font-size: 20px;
+
+    .word {
+      display: block;
+      text-align: center;
+      position: relative;
+      top: 40%;
+    }    
+  }
+  
+  
+  .back {
+  z-index: 1;
+  word-wrap: break-word;
+  line-height: 1.6;
+    
+    .definition {
+      width: 100%;
+      height: 100%;
+            
+      .photo {
+        width: 60%;
+        margin: 0px auto;
+          
+      }
+    }
+  }
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
