@@ -1,0 +1,198 @@
+# PROJECT
+---------
+
+* Sassy Parallax Banner
+-----------------------
+Parallax scrolling is a popular web design trend that gained momentum in recent years! If you’ve ever noticed a background moving at a slower rate than the foreground, creating a 3D 
+effect and adding depth, then you’ve seen parallax scrolling.
+
+The sleek traveling agency Travels-R-Us has reached out to you to launch their new “Visit Myanmar” page. They have requested a page that implements a parallax banner so that the user may 
+scroll and admire travel photography as they decide where to take their next trip. After some research, you decide nesting, variables, and mixins will be the best tools to style a parallax banner. Let’s do this!
+
+If you get stuck during this project or would like to see an experienced developer work through it, click “Get Unstuck“ to see a project walkthrough video.
+
+1.
+Define the following variables at the top of your main.scss file—:
+
+$parallax-height: 100vh;
+$center-margin: 0px auto;
+
+Reference those variables inside the instances that use them.
+
+
+Hint
+Reference $parallax-height as the height property of #landscape and #monkeys. Reference $center-margin inside of p.
+
+2.
+Start to create the logic for a parallax effect. Inside of both id selectors for our background parallax, #landscape and #monkeys add the following properties:
+
+  width: 100%;
+  height: 100vh;
+  perspective: 1px;
+  transform: translateZ(-1px);
+  overflow-x: hidden;
+  overflow-y: auto;
+
+
+Hint
+#landscape, #monkeys{
+  width: 100%;
+  height: 100vh;
+  perspective: 1px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  transform: translateZ(-1px);
+}
+
+Play around with the property values to understand how each one is working towards achieving a parallax effect. Especially with the transform property!
+
+3.
+Since you are including travel photography in your parallax, you make sure that the background image covers the entire div. You can do this by setting the webkit-background-size to a 
+value cover. This property is vendor specific, so it means you will need to make a mixin with the following properties:
+
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+
+The mixin should takes one parameter, the size, and assign that to all of the vendor properties.
+
+
+Hint
+@mixin background-size($size) {
+  -webkit-background-size: $size;
+  -moz-background-size: $size;
+  -o-background-size: $size;
+  background-size: $size;
+}
+
+4.
+Task 4: At the top of your main.scss, make a new mixin with the rest of the parallax background properties.
+
+@mixin parallax-background($file) {
+  background: url($file) no-repeat center center fixed;
+  @include background-size(cover);
+}
+
+
+Hint
+Be sure to include the mixin at the top of your file.
+
+5.
+Include the mixin inside the selectors of the both #landscape and #monkeys, passing in a value of
+
+"https://content.codecademy.com/projects/sass/landscape.jpg"
+
+and "https://content.codecademy.com/projects/sass/monkeys.jpg"
+
+respectively.
+
+
+Hint
+@include parallax-background("https://content.codecademy.com/projects/sass/monkeys.jpg");
+
+6.
+Assign the h1 property a
+
+transform: translateZ(-2px);
+
+This is to ensure that the Z-axis may be at a different translate setting than the image in the foreground.
+
+
+Hint
+h1{
+  transform: translateZ(-2px);
+}
+
+7.
+Scroll around in the webpage! Observe the parallax effect. Tweak the transform effects as you please and play around with the values to create your own effects.
+
+
+Hint
+Congratulations! You’ve styled a SCSS parallax banner.
+
+index.html
+----------
+<head>
+	<link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+
+<div id="landscape">
+  <h1 class="title">Visit Myanmar</h1>
+</div>
+
+<p>
+  Descriptions to come. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer consectetur, libero eget bibendum elementum, lorem orci rutrum justo, at fermentum neque felis ac ex. Phasellus suscipit dapibus ante, eu sodales risus sagittis ut. Phasellus eget augue purus. Sed eget auctor felis, egestas vestibulum augue. Aenean pharetra metus quis orci consequat dapibus. Integer aliquam aliquet ipsum ut pellentesque. Curabitur cursus, nibh ut vehicula maximus, eros libero pretium diam, eu luctus nisl mauris a augue. Nulla luctus in orci non vulputate. Suspendisse at tortor elit.
+</p>
+
+<div id="monkeys">
+  <h1 class="title">Book my trip now</h1>
+</div>
+
+</body>
+
+main.scss
+---------
+$parallax-height: 100vh;
+$center-margin: 0px auto;
+
+@mixin background-size($size) {
+  background-size: $size;
+  -webkit-background-size: $size;
+  -moz-background-size: $size;
+  -o-background-size: $size;
+}
+@mixin parallax-background($file) {
+  background: url($file) no-repeat center center fixed;
+  @include background-size(cover);
+  
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Roboto;
+  color: #2e3738;
+}
+
+
+#landscape {
+  @include parallax-background("https://content.codecademy.com/projects/sass/landscape.jpg");
+}
+
+#monkeys {
+   @include parallax-background("https://content.codecademy.com/projects/sass/monkeys.jpg");
+}
+
+#landscape,
+#monkeys {
+    width: 100%;
+    height: $parallax-height;
+    perspective: 1px;
+    transform: translateZ(-1px);
+    overflow-x: hidden;
+    overflow-y: auto;
+  
+	h1{
+		  text-transform: uppercase;
+	  	font-family: 'Bitter', serif;
+	  	letter-spacing: 0.06em;
+	  	font-size: 120px;
+	  	color: #FFF;
+	  	opacity: 0.7;
+	  	text-align: center;
+      transform: translateZ(-2px);
+	}
+}
+
+p {
+	width: 70%;
+	padding: 5%;
+	margin: $center-margin;
+	text-align: center;
+	font-size: 20px;
+	font-weight: 200;
+	line-height: 1.4;
+}
